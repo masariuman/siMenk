@@ -8,6 +8,7 @@ import MobileMenu from "./warudo/MobileMenu";
 import Menu from "./warudo/Menu";
 import Empatkosongempat from "./warudo/Empatkosongempat";
 import LandingPage from "./component/LandingPage";
+import ReferensiJafung from "./component/referensi/Jafung"
 // import DashboardIndex from "./component/dashboard/Index";
 
 class ReactRoute extends Component {
@@ -37,6 +38,7 @@ class ReactRoute extends Component {
                 <Menu />
                 <Routes>
                     <Route exact path="/" element={< LandingPage />} />
+                    <Route exact path="/referensi/jafung" element={< ReferensiJafung />} />
                     <Route path="*" element={< Empatkosongempat />}/>
                 </Routes>
             </Router>
