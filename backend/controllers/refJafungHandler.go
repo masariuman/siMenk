@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"backend/configs"
-	"backend/repositories"
 	"backend/services"
 	"backend/universalfunctions"
 	"net/http"
@@ -10,9 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RootHandler(c *gin.Context) {
-	refJafungService := services.NewRefJafungService(repositories.NewRefJafungRepository(configs.Connect))
-	refJafung, err := refJafungService.FindAll()
+type refJafungHandler struct {
+	refJafungService services.RefJafungService
+}
+
+func NewRefJafungHandler(refJafungService services.RefJafungService) *refJafungHandler {
+	return &refJafungHandler{refJafungService}
+}
+
+func (h *refJafungHandler) RootHandler(c *gin.Context) {
+	refJafung, err := h.refJafungService.FindAll()
 
 	universalfunctions.PanicErr(err)
 
