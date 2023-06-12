@@ -17,7 +17,8 @@ func NewRefJafungHandler(refJafungService services.RefJafungService) *refJafungH
 }
 
 func (h *refJafungHandler) RootHandler(c *gin.Context) {
-	refJafung, err := h.refJafungService.FindAll()
+	var pagination universalfunctions.Pagination
+	refJafung, err := h.refJafungService.GetAllPaginated(pagination)
 
 	universalfunctions.PanicErr(err)
 
