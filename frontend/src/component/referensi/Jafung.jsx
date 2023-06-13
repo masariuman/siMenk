@@ -275,10 +275,10 @@ class Jafung extends Component {
                         </div>
                         <div className="onboarding-content with-gradient">
                         <h4 className="onboarding-title">
-                            Tambah  Jabatan Fungsional Baru
+                            Tambah Jabatan Fungsional Baru
                         </h4>
                         <div className="onboarding-text">
-                            Masukkan nama  Jabatan Fungsional baru.
+                            Masukkan Jabatan Fungsional baru.
                         </div>
                         <form onSubmit={this.handleSubmit}>
                             <div className="row">
