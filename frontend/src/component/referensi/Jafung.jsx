@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Loading from "../../warudo/Loading";
 import swal from 'sweetalert2';
 import Pagination from "react-js-pagination";
+import axios from "axios";
 
 
 class Jafung extends Component {
@@ -188,48 +189,48 @@ class Jafung extends Component {
         // // console.log(this.state.create);
     }
 
-    getTag() {
-        // this.setState({
-        //     loading: true
-        // });
-        // axios
-        //     .get("/masariuman_tag")
-        //     .then(response => {
-        //         this.setState({
-        //             jafung: response.data.deeta_tag.data,
-        //             loading: false,
-        //             activePage: response.data.deeta_tag.current_page,
-        //             itemsCountPerPage: response.data.deeta_tag.per_page,
-        //             totalItemsCount: response.data.deeta_tag.total,
-        //             pageRangeDisplayed: 10
-        //         });
-        //     })
-        //     .catch(error => {
-        //         swal("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
-        //         this.setState({loading: false});
-        //     });
+    getRefJafung() {
+        this.setState({
+            loading: true
+        });
+        axios
+            .get("http://127.0.0.1:8877/v1/referensi/jafung")
+            .then(response => {
+                this.setState({
+                    jafung: response.data.data,
+                    loading: false,
+                    activePage: response.data.current_page,
+                    itemsCountPerPage: response.data.per_page,
+                    totalItemsCount: response.data.total,
+                    pageRangeDisplayed: 10
+                });
+            })
+            .catch(error => {
+                swal.fire("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
+                this.setState({loading: false});
+            });
     }
 
     handlePageChange(pageNumber) {
-        // this.setState({
-        //     loading: true
-        // });
-        // axios
-        //     .get('/masariuman_tag?page='+pageNumber)
-        //     .then(response => {
-        //         this.setState({
-        //             jafung: response.data.deeta_tag.data,
-        //             loading: false,
-        //             activePage: response.data.deeta_tag.current_page,
-        //             itemsCountPerPage: response.data.deeta_tag.per_page,
-        //             totalItemsCount: response.data.deeta_tag.total,
-        //             pageRangeDisplayed: 10
-        //         });
-        //     })
-        //     .catch(error => {
-        //         swal("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
-        //         this.setState({loading: false});
-        //     });
+        this.setState({
+            loading: true
+        });
+        axios
+            .get('http://127.0.0.1:8877/v1/referensi/jafung?page='+pageNumber)
+            .then(response => {
+                this.setState({
+                    jafung: response.data.data,
+                    loading: false,
+                    activePage: response.data.current_page,
+                    itemsCountPerPage: response.data.per_page,
+                    totalItemsCount: response.data.total,
+                    pageRangeDisplayed: 10
+                });
+            })
+            .catch(error => {
+                swal("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
+                this.setState({loading: false});
+            });
     }
 
     // testTag() {
@@ -239,20 +240,21 @@ class Jafung extends Component {
     // }
 
     componentDidMount() {
-        this.getTag();
+        this.getRefJafung();
         // console.log(this.state.jafung);
     }
 
     componentDidUpdate() {
-        // this.getTag();
+        // this.getRefJafung();
     }
 
     renderJafung() {
         return !this.state.jafung.length ? <tr><td colSpan="3" className="text-center">Data Tidak Ditemukan</td></tr> :
             this.state.jafung.map(jafung => (
-                <tr key={jafung.id}>
+                <tr key={jafung.kode}>
                     <th scope="row">{jafung.nomor}</th>
-                    <td>{jafung.jafung}</td>
+                    <td>{jafung.nama_jab}</td>
+                    <td>{jafung.nama_jenjang}</td>
                     <td>
                         <button data-target="#editModal" data-toggle="modal" className="mb-2 mr-2 border-0 btn-transition btn btn-shadow btn-outline-warning" type="button" onClick={this.handleEditButton.bind(this, jafung.url)}>Edit</button>
                         <button className="mb-2 mr-2 border-0 btn-transition btn btn-shadow btn-outline-danger" type="button" onClick={this.handleDeleteButton.bind(this, jafung.url)}>Delete</button>
@@ -406,6 +408,7 @@ class Jafung extends Component {
                                                 <tr>
                                                     <th className="width50px">NO</th>
                                                     <th> NAMA JABATAN FUNGSIONAL</th>
+                                                    <th> JENJANG</th>
                                                     <th className="width250px">AKSI</th>
                                                 </tr>
                                             </thead>

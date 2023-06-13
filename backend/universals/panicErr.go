@@ -1,4 +1,4 @@
-package universalfunctions
+package universals
 
 func PanicErr(err error) {
 	if err != nil {

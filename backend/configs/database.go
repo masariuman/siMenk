@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"backend/universalfunctions"
+	"backend/universals"
 	"fmt"
 
 	"gorm.io/driver/mysql"
@@ -19,7 +19,7 @@ func ConnectDatabase() {
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", USERNAME, PASSWORD, HOST, PORT, DATABASE)
 	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	universalfunctions.PanicErr(err)
+	universals.PanicErr(err)
 
 	// autoMigration(database)
 	Connect = database

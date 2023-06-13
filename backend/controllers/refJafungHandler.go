@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"backend/services"
-	"backend/universalfunctions"
+	"backend/universals"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,10 +18,9 @@ func NewRefJafungHandler(refJafungService services.RefJafungService) *refJafungH
 }
 
 func (h *refJafungHandler) RootHandler(c *gin.Context) {
-	var pagination universalfunctions.Pagination
-	refJafung, err := h.refJafungService.GetAllPaginated(pagination)
-
-	universalfunctions.PanicErr(err)
-
+	pageStr := c.Query("page")
+	page, _ := strconv.Atoi(pageStr)
+	refJafung, err := h.refJafungService.GetAllPaginated(page)
+	universals.PanicErr(err)
 	c.JSON(http.StatusOK, refJafung)
 }

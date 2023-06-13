@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"backend/models/migrations"
-	"backend/universalfunctions"
 
 	"gorm.io/gorm"
 )
@@ -10,7 +9,8 @@ import (
 type RefJafungRepository interface {
 	FindAll() ([]migrations.RefJabFung, error)
 	FindAllActive() ([]migrations.RefJabFung, error)
-	FindAllPaginated(pagination universalfunctions.Pagination) (*universalfunctions.Pagination, error)
+	FindAllPaginated(offset int, limit int) ([]migrations.RefJabFung, error)
+	CountActive() int64
 }
 
 type repository struct {
@@ -33,10 +33,14 @@ func (r *repository) FindAllActive() ([]migrations.RefJabFung, error) {
 	return jafungs, err
 }
 
-func (r *repository) FindAllPaginated(pagination universalfunctions.Pagination) (*universalfunctions.Pagination, error) {
+func (r *repository) FindAllPaginated(offset int, limit int) ([]migrations.RefJabFung, error) {
 	var jafungs []migrations.RefJabFung
-	r.database.Scopes(universalfunctions.Paginate(jafungs, &pagination, r.database)).Find(&jafungs)
-	pagination.Rows = jafungs
+	err := r.database.Debug().Where("is_deleted = ?", 0).Limit(limit).Offset(offset).Find(&jafungs).Error
+	return jafungs, err
+}
 
-	return &pagination, nil
+func (r *repository) CountActive() int64 {
+	var count int64
+	_ = r.database.Model(&migrations.RefJabFung{}).Where("is_deleted = ?", 0).Count(&count).Error
+	return count
 }
