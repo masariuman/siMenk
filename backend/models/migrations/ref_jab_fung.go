@@ -24,11 +24,3 @@ type RefJabFung struct {
 	Tunjangan_jab    int    `gorm:"type:double" json:"tunjangan_jab"`
 	Is_deleted       int    `gorm:"type:int(11)" json:"is_deleted"`
 }
-
-type Tabler interface {
-	TableName() string
-}
-
-func (RefJabFung) TableName() string {
-	return "ref_jab_fung"
-}

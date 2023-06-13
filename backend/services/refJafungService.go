@@ -7,27 +7,17 @@ import (
 	"backend/universals"
 )
 
-type RefJafungService interface {
-	GetAll() ([]migrations.RefJabFung, error)
-	GetAllActive() ([]returns.RefJabFung, error)
-	GetAllPaginated(page int) (universals.Pagination, error)
-}
-
-type service struct {
-	repository repositories.RefJafungRepository
-}
-
 func NewRefJafungService(repository repositories.RefJafungRepository) *service {
 	return &service{repository}
 }
 
-func (s *service) GetAll() ([]migrations.RefJabFung, error) {
-	return s.repository.FindAll()
+func (s *service) GetAllJafung() ([]migrations.RefJabFung, error) {
+	return s.repository.FindAllJafung()
 }
 
-func (s *service) GetAllActive() ([]returns.RefJabFung, error) {
+func (s *service) GetAllActiveJafung() ([]returns.RefJabFung, error) {
 	var refJafungs []returns.RefJabFung
-	dbRefJafungs, err := s.repository.FindAllActive()
+	dbRefJafungs, err := s.repository.FindAllActiveJafung()
 	for _, Q := range dbRefJafungs {
 		refJafung := returns.RefJabFung{
 			Kode:         Q.Kode,
@@ -39,7 +29,7 @@ func (s *service) GetAllActive() ([]returns.RefJabFung, error) {
 	return refJafungs, err
 }
 
-func (s *service) GetAllPaginated(page int) (universals.Pagination, error) {
+func (s *service) GetAllPaginatedJafung(page int) (universals.Pagination, error) {
 	var refJafungs []returns.RefJabFung
 	if page == 0 {
 		page = 1
@@ -47,8 +37,8 @@ func (s *service) GetAllPaginated(page int) (universals.Pagination, error) {
 	offset := (page - 1) * 10
 	limit := 10
 	per_page := 10
-	count := s.repository.CountActive()
-	dbRefJafungs, err := s.repository.FindAllPaginated(offset, limit)
+	count := s.repository.CountActiveJafung()
+	dbRefJafungs, err := s.repository.FindAllPaginatedJafung(offset, limit)
 	nomor := offset + 1
 	for _, Q := range dbRefJafungs {
 		refJafung := returns.RefJabFung{

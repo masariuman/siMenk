@@ -20,7 +20,7 @@ func NewRefJafungHandler(refJafungService services.RefJafungService) *refJafungH
 func (h *refJafungHandler) RootHandler(c *gin.Context) {
 	pageStr := c.Query("page")
 	page, _ := strconv.Atoi(pageStr)
-	refJafung, err := h.refJafungService.GetAllPaginated(page)
+	refJafung, err := h.refJafungService.GetAllPaginatedJafung(page)
 	universals.PanicErr(err)
 	c.JSON(http.StatusOK, refJafung)
 }
