@@ -13,7 +13,7 @@ func refSubRumpunJabatan(superRoute *gin.RouterGroup) {
 	refSubRumpunJabatanRepository := repositories.NewRefSubRumpunJabatanRepository(configs.Connect)
 	refSubRumpunJabatanService := services.NewRefSubRumpunJabatanService(refSubRumpunJabatanRepository)
 	refSubRumpunJabatanHandler := controllers.NewRefSubRumpunJabatanHandler(refSubRumpunJabatanService)
-	refSubRumpunJabatan := superRoute.Group("/referensi/ref_subrumpun_jabatan")
+	refSubRumpunJabatan := superRoute.Group("/referensi/subrumpun_jabatan")
 	{
 		refSubRumpunJabatan.GET("", refSubRumpunJabatanHandler.RootHandler)
 	}
