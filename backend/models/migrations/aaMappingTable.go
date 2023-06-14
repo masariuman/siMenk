@@ -9,9 +9,9 @@ func (RefJabFung) TableName() string {
 }
 
 func (RefRumpunJabatan) TableName() string {
-	return "ref_jab_fung"
+	return "rumpun_jabatan"
 }
 
 func (RefSubrumpunJabatan) TableName() string {
-	return "ref_jab_fung"
+	return "subrumpun_jabatan"
 }

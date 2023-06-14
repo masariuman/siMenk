@@ -18,18 +18,18 @@ func (r *repository) FindAllRefRumpunJabatan() ([]migrations.RefRumpunJabatan, e
 
 func (r *repository) FindAllActiveRefRumpunJabatan() ([]migrations.RefRumpunJabatan, error) {
 	var rumpunJabatans []migrations.RefRumpunJabatan
-	err := r.database.Debug().Where("is_deleted = ?", 0).Find(&rumpunJabatans).Error
+	err := r.database.Debug().Find(&rumpunJabatans).Error
 	return rumpunJabatans, err
 }
 
 func (r *repository) FindAllPaginatedRefRumpunJabatan(offset int, limit int) ([]migrations.RefRumpunJabatan, error) {
 	var rumpunJabatans []migrations.RefRumpunJabatan
-	err := r.database.Debug().Where("is_deleted = ?", 0).Limit(limit).Offset(offset).Find(&rumpunJabatans).Error
+	err := r.database.Debug().Limit(limit).Offset(offset).Find(&rumpunJabatans).Error
 	return rumpunJabatans, err
 }
 
 func (r *repository) CountActiveRefRumpunJabatan() int64 {
 	var count int64
-	_ = r.database.Model(&migrations.RefRumpunJabatan{}).Where("is_deleted = ?", 0).Count(&count).Error
+	_ = r.database.Model(&migrations.RefRumpunJabatan{}).Count(&count).Error
 	return count
 }
