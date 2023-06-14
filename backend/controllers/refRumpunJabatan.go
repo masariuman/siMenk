@@ -8,10 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (h *refJafungHandler) RootHandler(c *gin.Context) {
+func (h *refRumpunJabatanHandler) RootHandler(c *gin.Context) {
 	pageStr := c.Query("page")
 	page, _ := strconv.Atoi(pageStr)
-	refJafung, err := h.refJafungService.GetAllPaginatedJafung(page)
+	refJafung, err := h.refRumpunJabatanService.GetAllPaginatedRumpunJabatan(page)
 	universals.PanicErr(err)
 	c.JSON(http.StatusOK, refJafung)
 }
