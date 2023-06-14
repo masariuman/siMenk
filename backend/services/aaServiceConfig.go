@@ -22,8 +22,8 @@ type refRumpunJabatanservice struct {
 }
 
 type RefRumpunJabatanService interface {
-	GetAllRumpunJabatan() ([]migrations.RefJabFung, error)
-	GetAllActiveRumpunJabatan() ([]returns.RefJabFung, error)
+	GetAllRumpunJabatan() ([]migrations.RefRumpunJabatan, error)
+	GetAllActiveRumpunJabatan() ([]returns.RefRumpunJabatan, error)
 	GetAllPaginatedRumpunJabatan(page int) (universals.Pagination, error)
 }
 
@@ -32,7 +32,7 @@ type refSubRumpunJabatanService struct {
 }
 
 type RefSubRumpunJabatanService interface {
-	GetAllSubRumpunJabatan() ([]migrations.RefJabFung, error)
-	GetAllActiveSubRumpunJabatan() ([]returns.RefJabFung, error)
+	GetAllSubRumpunJabatan() ([]migrations.RefSubrumpunJabatan, error)
+	GetAllActiveSubRumpunJabatan() ([]returns.RefSubrumpunJabatan, error)
 	GetAllPaginatedSubRumpunJabatan(page int) (universals.Pagination, error)
 }
