@@ -2,9 +2,12 @@ package services
 
 import (
 	"backend/models/migrations"
+	"backend/models/requests"
 	"backend/models/returns"
 	"backend/repositories"
 	"backend/universals"
+
+	"github.com/gin-gonic/gin"
 )
 
 type service struct {
@@ -25,6 +28,7 @@ type RefRumpunJabatanService interface {
 	GetAllRumpunJabatan() ([]migrations.RefRumpunJabatan, error)
 	GetAllActiveRumpunJabatan() ([]returns.RefRumpunJabatan, error)
 	GetAllPaginatedRumpunJabatan(page int) (universals.Pagination, error)
+	Store(refRumpunJabatanRequest requests.RefRumpunJabatanRequest, err error, c *gin.Context) (returns.RefRumpunJabatan, error)
 }
 
 type refSubRumpunJabatanService struct {

@@ -2,9 +2,15 @@ package services
 
 import (
 	"backend/models/migrations"
+	"backend/models/requests"
 	"backend/models/returns"
 	"backend/repositories"
 	"backend/universals"
+	"fmt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 func NewRefRumpunJabatanService(refRumpunJabatanRepository repositories.RefRumpunJabatanRepository) *refRumpunJabatanservice {
@@ -55,4 +61,32 @@ func (s *refRumpunJabatanservice) GetAllPaginatedRumpunJabatan(page int) (univer
 		Data:         refRumpunJabatans,
 	}
 	return refRumpunJabatanPagination, err
+}
+
+func (s *refRumpunJabatanservice) Store(refRumpunJabatanRequest requests.RefRumpunJabatanRequest, err error, c *gin.Context) (returns.RefRumpunJabatan, error) {
+	if err != nil {
+		var returnRefRumpunJabatan returns.RefRumpunJabatan
+		errorMessages := []string{}
+		for _, e := range err.(validator.ValidationErrors) {
+			errorMessage := fmt.Sprintf("Error pada %s, Kondisi : %s", e.Field(), e.ActualTag())
+			errorMessages = append(errorMessages, errorMessage)
+		}
+
+		c.JSON(http.StatusBadRequest, gin.H{
+			"errors": errorMessages,
+		})
+		return returnRefRumpunJabatan, err
+	}
+	refRumpunJabatan := migrations.RefRumpunJabatan{
+		Rumpun: refRumpunJabatanRequest.Rumpun,
+	}
+	_, err = s.refRumpunJabatanRepository.Store(refRumpunJabatan)
+	universals.PanicErr(err)
+	refRumpunJabatanLast, _ := s.refRumpunJabatanRepository.FindLast()
+	refRumpunJabatanLatest := returns.RefRumpunJabatan{
+		Id_rumpun: refRumpunJabatanLast.Id_rumpun,
+		Nomor:     0,
+		Rumpun:    refRumpunJabatanLast.Rumpun,
+	}
+	return refRumpunJabatanLatest, err
 }

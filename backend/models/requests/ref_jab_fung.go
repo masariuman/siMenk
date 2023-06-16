@@ -1,4 +1,4 @@
-package responses
+package requests
 
 type RefJabFung struct {
 	Kode             string `gorm:"primaryKey; type:varchar(10)" json:"kode"`

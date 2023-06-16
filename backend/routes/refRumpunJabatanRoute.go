@@ -16,5 +16,6 @@ func refRumpunJabatan(superRoute *gin.RouterGroup) {
 	refRumpunJabatan := superRoute.Group("/referensi/rumpun_jabatan")
 	{
 		refRumpunJabatan.GET("", refRumpunJabatanHandler.RootHandler)
+		refRumpunJabatan.GET("", refRumpunJabatanHandler.StoreHandler)
 	}
 }

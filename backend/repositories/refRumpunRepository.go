@@ -33,3 +33,14 @@ func (r *repository) CountActiveRefRumpunJabatan() int64 {
 	_ = r.database.Model(&migrations.RefRumpunJabatan{}).Count(&count).Error
 	return count
 }
+
+func (r *repository) Store(rumpunJabatan migrations.RefRumpunJabatan) (migrations.RefRumpunJabatan, error) {
+	err := r.database.Create(&rumpunJabatan).Error
+	return rumpunJabatan, err
+}
+
+func (r *repository) FindLast() (migrations.RefRumpunJabatan, error) {
+	var rumpunJabatan migrations.RefRumpunJabatan
+	err := r.database.Debug().Last(&rumpunJabatan).Error
+	return rumpunJabatan, err
+}
