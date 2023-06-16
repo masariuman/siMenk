@@ -675,7 +675,7 @@ class Menu extends Component {
                         </NavLink>
                         <div className="sub-menu-w">
                     <div className="sub-menu-header">
-                        INFO PEGAWAI
+                        REFERENSI
                     </div>
                     <div className="sub-menu-icon">
                         <i className="os-icon os-icon-cv-2"></i>
@@ -683,13 +683,18 @@ class Menu extends Component {
                     <div className="sub-menu-i">
                         <ul className="sub-menu">
                             <li>
-                                <Link to={`/identitasPegawai`}>
-                                    <i className="os-icon os-icon-cv-2"></i> &nbsp;&nbsp;&nbsp;Identitas Pegawai
+                                <Link to={`/referensi/rumpun_jabatan`}>
+                                    <i className="os-icon os-icon-grid-squares-22"></i> &nbsp;&nbsp;&nbsp;Rumpun Jabatan
                                 </Link>
                             </li>
                             <li>
-                                <Link to={`/pangkat`}>
-                                    <i className="fa fa-star"></i> &nbsp;&nbsp;&nbsp;Pangkat
+                                <Link to={`/referensi/subrumpun_jabatan`}>
+                                    <i className="os-icon os-icon-grid-squares-2"></i> &nbsp;&nbsp;&nbsp;Sub Rumpun Jabatan
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={`/referensi/jafung`}>
+                                    <i className="fa fa-id-badge"></i> &nbsp;&nbsp;&nbsp;Jabatan Fungsional
                                 </Link>
                             </li>
                         </ul>
