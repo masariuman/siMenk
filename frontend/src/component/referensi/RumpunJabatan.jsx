@@ -14,9 +14,10 @@ class RumpunJabatan extends Component {
         super(props);
         this.state = {
             rumpunJabatan: [],
-            create: "",
+            rumpun: "",
             rumpunJabatanEditInput: "",
             cari: "",
+            totalItemsCount: 0,
             url: null,
             loading: false
         };
@@ -57,7 +58,7 @@ class RumpunJabatan extends Component {
         // axios
         //     .get(`/masariuman_tag/${e}`)
         //     .then(response => {
-        //         swal({
+        //         swal.fire({
         //             title: `Yakin ingin menghapus rumpunJabatan ${response.data.deeta_tag.rumpunJabatan}`,
         //             text: "Kalau Terhapus, Hubungi Admin Untuk Mengembalikan Data yang Terhapus!",
         //             icon: "warning",
@@ -78,22 +79,22 @@ class RumpunJabatan extends Component {
         //                             rumpunJabatan: response.data.deeta_tag.data,
         //                             loading: false
         //                         });
-        //                         swal("Sukses!", "Data Berhasil Dihapus!", "success");
+        //                         swal.fire("Sukses!", "Data Berhasil Dihapus!", "success");
         //                         // console.log("from handle sumit", response);
         //                     })
         //                     .catch(error => {
         //                         this.setState({
         //                             loading: false
         //                         });
-        //                         swal("Error!", "Gagal Menghapus Data, Silahkan Hubungi Admin!", "error");
+        //                         swal.fire("Error!", "Gagal Menghapus Data, Silahkan Hubungi Admin!", "error");
         //                     });
         //             } else {
-        //               swal("Data Tidak Terhapus!");
+        //               swal.fire("Data Tidak Terhapus!");
         //             }
         //           });
         //     })
         //     .catch(error => {
-        //         swal("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
+        //         swal.fire("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
         //     });
     }
 
@@ -107,13 +108,13 @@ class RumpunJabatan extends Component {
         //         });
         //     })
         //     .catch(error => {
-        //         swal("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
+        //         swal.fire("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
         //     });
     }
 
     handleChange(e) {
         this.setState({
-            create: e.target.value
+            rumpun: e.target.value
         });
         // console.log(e.target.value);
     }
@@ -126,35 +127,35 @@ class RumpunJabatan extends Component {
     }
 
     handleSubmit(e) {
-        // e.preventDefault();
-        // this.setState({
-        //     loading: true
-        // });
-        // axios
-        //     .post("/masariuman_tag", {
-        //         create: this.state.create
-        //     })
-        //     .then(response => {
-        //         this.setState({
-        //             rumpunJabatan: [response.data.deeta_tag, ...this.state.rumpunJabatan],
-        //             create: "",
-        //             loading: false
-        //         });
-        //         $("#tambahModal").removeClass("in");
-        //         $(".modal-backdrop").remove();
-        //         $('body').removeClass('modal-open');
-        //         $('body').css('padding-right', '');
-        //         $("#tambahModal").hide();
-        //         swal("Sukses!", "Data Baru Berhasil Ditambahkan!", "success");
-        //         // console.log("from handle sumit", response);
-        //     })
-        //     .catch(error => {
-        //         this.setState({
-        //             loading: false
-        //         });
-        //         swal("Error!", "Gagal Memasukkan Data Baru, Silahkan Hubungi Admin!", "error");
-        //     });
-        // // console.log(this.state.create);
+        e.preventDefault();
+        this.setState({
+            loading: true
+        });
+        axios
+            .post("http://127.0.0.1:8877/v1/referensi/rumpun_jabatan", {
+                rumpun: this.state.rumpun
+            })
+            .then(response => {
+                this.setState({
+                    rumpunJabatan: [response.data.data, ...this.state.rumpunJabatan],
+                    rumpun: "",
+                    loading: false
+                });
+                $("#tambahModal").removeClass("in");
+                $(".modal-backdrop").remove();
+                $('body').removeClass('modal-open');
+                $('body').css('padding-right', '');
+                $("#tambahModal").hide();
+                swal.fire("Sukses!", "Data Baru Berhasil Ditambahkan!", "success");
+                // console.log("from handle sumit", response);
+            })
+            .catch(error => {
+                this.setState({
+                    loading: false
+                });
+                swal.fire("Error!", "Gagal Memasukkan Data Baru, Silahkan Hubungi Admin!", "error");
+            });
+        // console.log(this.state.rumpun);
     }
 
     handleEditSubmit(e) {
@@ -177,16 +178,16 @@ class RumpunJabatan extends Component {
         //         $('body').removeClass('modal-open');
         //         $('body').css('padding-right', '');
         //         $("#editModal").hide();
-        //         swal("Sukses!", "Data Berhasil Diubah!", "success");
+        //         swal.fire("Sukses!", "Data Berhasil Diubah!", "success");
         //         // console.log("from handle sumit", response);
         //     })
         //     .catch(error => {
         //         this.setState({
         //             loading: false
         //         });
-        //         swal("Error!", "Gagal Mengubah Data, Silahkan Hubungi Admin!", "error");
+        //         swal.fire("Error!", "Gagal Mengubah Data, Silahkan Hubungi Admin!", "error");
         //     });
-        // // console.log(this.state.create);
+        // // console.log(this.state.rumpun);
     }
 
     getRefRumpunJabatan() {
@@ -228,7 +229,7 @@ class RumpunJabatan extends Component {
                 });
             })
             .catch(error => {
-                swal("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
+                swal.fire("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
                 this.setState({loading: false});
             });
     }
@@ -270,7 +271,7 @@ class RumpunJabatan extends Component {
                     <button aria-label="Close" className="close" data-dismiss="modal" type="button"><span className="close-label">Tutup</span><span className="os-icon os-icon-close"></span></button>
                     <div className="onboarding-side-by-side">
                         <div className="onboarding-media">
-                        <img alt="" src="/iconModal/tagplus.png" width="200px" />
+                        <img alt="" src="/iconModal/gridAdd.png" width="200px" />
                         </div>
                         <div className="onboarding-content with-gradient">
                         <h4 className="onboarding-title">
@@ -285,7 +286,7 @@ class RumpunJabatan extends Component {
                                 <div className="form-group">
                                     <input
                                         onChange={this.handleChange}
-                                        value={this.state.create}
+                                        value={this.state.rumpun}
                                         title="Rumpun Jabatan"
                                         placeholder="Masukkan Rumpun Jabatan Baru.."
                                         type="text"

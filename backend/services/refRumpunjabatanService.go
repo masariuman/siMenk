@@ -8,6 +8,7 @@ import (
 	"backend/universals"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -46,9 +47,10 @@ func (s *refRumpunJabatanservice) GetAllPaginatedRumpunJabatan(page int) (univer
 	dbRefRumpunJabatans, err := s.refRumpunJabatanRepository.FindAllPaginatedRefRumpunJabatan(offset, limit)
 	nomor := offset + 1
 	for _, Q := range dbRefRumpunJabatans {
+		nomorString := strconv.Itoa(nomor)
 		refRumpunJabatan := returns.RefRumpunJabatan{
 			Id_rumpun: Q.Id_rumpun,
-			Nomor:     nomor,
+			Nomor:     nomorString,
 			Rumpun:    Q.Rumpun,
 		}
 		refRumpunJabatans = append(refRumpunJabatans, refRumpunJabatan)
@@ -85,7 +87,7 @@ func (s *refRumpunJabatanservice) Store(refRumpunJabatanRequest requests.RefRump
 	refRumpunJabatanLast, _ := s.refRumpunJabatanRepository.FindLast()
 	refRumpunJabatanLatest := returns.RefRumpunJabatan{
 		Id_rumpun: refRumpunJabatanLast.Id_rumpun,
-		Nomor:     0,
+		Nomor:     "NEW",
 		Rumpun:    refRumpunJabatanLast.Rumpun,
 	}
 	return refRumpunJabatanLatest, err
