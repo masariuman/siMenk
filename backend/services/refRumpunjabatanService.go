@@ -93,7 +93,7 @@ func (s *refRumpunJabatanservice) Store(refRumpunJabatanRequest requests.RefRump
 	return refRumpunJabatanLatest, err
 }
 
-func (s *refRumpunJabatanservice) GetById(ID string) (returns.RefRumpunJabatan, error) {
+func (s *refRumpunJabatanservice) GetById(ID int) (returns.RefRumpunJabatan, error) {
 	refRumpunJabatanFind, err := s.refRumpunJabatanRepository.FindById(ID)
 	refRumpunJabatanFound := returns.RefRumpunJabatan{
 		Id_rumpun: refRumpunJabatanFind.Id_rumpun,
@@ -101,4 +101,13 @@ func (s *refRumpunJabatanservice) GetById(ID string) (returns.RefRumpunJabatan, 
 		Rumpun:    refRumpunJabatanFind.Rumpun,
 	}
 	return refRumpunJabatanFound, err
+}
+
+func (s *refRumpunJabatanservice) Update(ID int, refRumpunJabatanRequest requests.RefRumpunJabatanRequest) error {
+	refRumpunJabatan := migrations.RefRumpunJabatan{
+		Id_rumpun: ID,
+		Rumpun:    refRumpunJabatanRequest.Rumpun,
+	}
+	_, err := s.refRumpunJabatanRepository.Update(ID, refRumpunJabatan)
+	return err
 }

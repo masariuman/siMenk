@@ -45,8 +45,13 @@ func (r *repository) FindLast() (migrations.RefRumpunJabatan, error) {
 	return rumpunJabatan, err
 }
 
-func (r *repository) FindById(ID string) (migrations.RefRumpunJabatan, error) {
+func (r *repository) FindById(ID int) (migrations.RefRumpunJabatan, error) {
 	var rumpunJabatan migrations.RefRumpunJabatan
 	err := r.database.Debug().Where("id_rumpun = ?", ID).First(&rumpunJabatan).Error
+	return rumpunJabatan, err
+}
+
+func (r *repository) Update(ID int, rumpunJabatan migrations.RefRumpunJabatan) (migrations.RefRumpunJabatan, error) {
+	err := r.database.Model(&rumpunJabatan).Where("id_rumpun = ?", ID).Updates(&rumpunJabatan).Error
 	return rumpunJabatan, err
 }

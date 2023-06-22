@@ -27,7 +27,18 @@ func (h *refRumpunJabatanHandler) StoreHandler(c *gin.Context) {
 
 func (h *refRumpunJabatanHandler) EditHandler(c *gin.Context) {
 	id := c.Param("id")
-	refRumpunJabatan, err := h.refRumpunJabatanService.GetById(id)
+	ID, _ := strconv.Atoi(id)
+	refRumpunJabatan, err := h.refRumpunJabatanService.GetById(ID)
 	universals.PanicErr(err)
 	c.JSON(http.StatusOK, gin.H{"Sukses": "Data Berhasil Disimpan.", "data": refRumpunJabatan})
+}
+
+func (h *refRumpunJabatanHandler) UpdateHandler(c *gin.Context) {
+	var rumpunJabatan requests.RefRumpunJabatanRequest
+	id := c.Param("id")
+	ID, _ := strconv.Atoi(id)
+	err := c.ShouldBindJSON(&rumpunJabatan)
+	err = h.refRumpunJabatanService.Update(ID, rumpunJabatan)
+	universals.PanicErr(err)
+	h.RootHandler(c)
 }

@@ -171,7 +171,7 @@ class RumpunJabatan extends Component {
             loading: true
         });
         axios
-            .put(`http://127.0.0.1:8877/v1/referensi/rumpun_jabatan/${this.state.url}`, {
+            .put(`http://127.0.0.1:8877/v1/referensi/rumpun_jabatan/${this.state.rumpunId}`, {
                 rumpun: this.state.rumpunJabatanEditInput
             })
             .then(response => {

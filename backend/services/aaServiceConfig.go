@@ -29,7 +29,8 @@ type RefRumpunJabatanService interface {
 	GetAllActiveRumpunJabatan() ([]returns.RefRumpunJabatan, error)
 	GetAllPaginatedRumpunJabatan(page int) (universals.Pagination, error)
 	Store(refRumpunJabatanRequest requests.RefRumpunJabatanRequest, err error, c *gin.Context) (returns.RefRumpunJabatan, error)
-	GetById(Id string) (returns.RefRumpunJabatan, error)
+	GetById(ID int) (returns.RefRumpunJabatan, error)
+	Update(ID int, refRumpunJabatanRequest requests.RefRumpunJabatanRequest) (error)
 }
 
 type refSubRumpunJabatanService struct {

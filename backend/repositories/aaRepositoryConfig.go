@@ -23,7 +23,8 @@ type RefRumpunJabatanRepository interface {
 	FindAllPaginatedRefRumpunJabatan(offset int, limit int) ([]migrations.RefRumpunJabatan, error)
 	Store(rumpunJabatan migrations.RefRumpunJabatan) (migrations.RefRumpunJabatan, error)
 	FindLast() (migrations.RefRumpunJabatan, error)
-	FindById(ID string) (migrations.RefRumpunJabatan, error)
+	FindById(ID int) (migrations.RefRumpunJabatan, error)
+	Update(ID int, rumpunJabatan migrations.RefRumpunJabatan) (migrations.RefRumpunJabatan, error)
 	CountActiveRefRumpunJabatan() int64
 }
 
