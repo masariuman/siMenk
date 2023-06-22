@@ -24,3 +24,10 @@ func (h *refRumpunJabatanHandler) StoreHandler(c *gin.Context) {
 	universals.PanicErr(err)
 	c.JSON(http.StatusOK, gin.H{"Sukses": "Data Berhasil Disimpan.", "data": refRumpunJabatan})
 }
+
+func (h *refRumpunJabatanHandler) EditHandler(c *gin.Context) {
+	id := c.Param("id")
+	refRumpunJabatan, err := h.refRumpunJabatanService.GetById(id)
+	universals.PanicErr(err)
+	c.JSON(http.StatusOK, gin.H{"Sukses": "Data Berhasil Disimpan.", "data": refRumpunJabatan})
+}

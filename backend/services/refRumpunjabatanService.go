@@ -70,7 +70,7 @@ func (s *refRumpunJabatanservice) Store(refRumpunJabatanRequest requests.RefRump
 		var returnRefRumpunJabatan returns.RefRumpunJabatan
 		errorMessages := []string{}
 		for _, e := range err.(validator.ValidationErrors) {
-			errorMessage := fmt.Sprintf("Error pada %s, Kondisi : %s", e.Field(), e.ActualTag())
+			errorMessage := fmt.Sprintf("Error pada bagian %s, Kondisi : %s", e.Field(), e.ActualTag())
 			errorMessages = append(errorMessages, errorMessage)
 		}
 
@@ -91,4 +91,14 @@ func (s *refRumpunJabatanservice) Store(refRumpunJabatanRequest requests.RefRump
 		Rumpun:    refRumpunJabatanLast.Rumpun,
 	}
 	return refRumpunJabatanLatest, err
+}
+
+func (s *refRumpunJabatanservice) GetById(ID string) (returns.RefRumpunJabatan, error) {
+	refRumpunJabatanFind, err := s.refRumpunJabatanRepository.FindById(ID)
+	refRumpunJabatanFound := returns.RefRumpunJabatan{
+		Id_rumpun: refRumpunJabatanFind.Id_rumpun,
+		Nomor:     "EDIT",
+		Rumpun:    refRumpunJabatanFind.Rumpun,
+	}
+	return refRumpunJabatanFound, err
 }

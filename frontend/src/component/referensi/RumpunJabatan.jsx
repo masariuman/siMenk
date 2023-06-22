@@ -99,17 +99,17 @@ class RumpunJabatan extends Component {
     }
 
     handleEditButton(e) {
-        // axios
-        //     .get(`/masariuman_tag/${e}`)
-        //     .then(response => {
-        //         this.setState({
-        //             rumpunJabatanEditInput: response.data.deeta_tag.rumpunJabatan,
-        //             url: response.data.deeta_tag.url
-        //         });
-        //     })
-        //     .catch(error => {
-        //         swal.fire("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
-        //     });
+        axios
+            .get(`http://127.0.0.1:8877/v1/referensi/rumpun_jabatan/${e}`)
+            .then(response => {
+                this.setState({
+                    rumpunJabatanEditInput: response.data.data.rumpun,
+                    rumpunId: response.data.data.id_rumpun
+                });
+            })
+            .catch(error => {
+                swal.fire("Error!", "Terdapat Masalah, Silahkan Hubungi Admin!", "error");
+            });
     }
 
     handleChange(e) {
@@ -153,41 +153,48 @@ class RumpunJabatan extends Component {
                 this.setState({
                     loading: false
                 });
-                swal.fire("Error!", "Gagal Memasukkan Data Baru, Silahkan Hubungi Admin!", "error");
+                var err = error.response.data.errors;
+                var errStr = err.toString();
+                swal.fire("Error!", errStr, "error");
+                $("#tambahModal").removeClass("in");
+                $(".modal-backdrop").remove();
+                $('body').removeClass('modal-open');
+                $('body').css('padding-right', '');
+                $("#tambahModal").hide();
             });
         // console.log(this.state.rumpun);
     }
 
     handleEditSubmit(e) {
-        // e.preventDefault();
-        // this.setState({
-        //     loading: true
-        // });
-        // axios
-        //     .put(`/masariuman_tag/${this.state.url}`, {
-        //         content: this.state.rumpunJabatanEditInput
-        //     })
-        //     .then(response => {
-        //         this.setState({
-        //             rumpunJabatan: response.data.deeta_tag.data,
-        //             rumpunJabatanEditInput: "",
-        //             loading: false
-        //         });
-        //         $("#editModal").removeClass("in");
-        //         $(".modal-backdrop").remove();
-        //         $('body').removeClass('modal-open');
-        //         $('body').css('padding-right', '');
-        //         $("#editModal").hide();
-        //         swal.fire("Sukses!", "Data Berhasil Diubah!", "success");
-        //         // console.log("from handle sumit", response);
-        //     })
-        //     .catch(error => {
-        //         this.setState({
-        //             loading: false
-        //         });
-        //         swal.fire("Error!", "Gagal Mengubah Data, Silahkan Hubungi Admin!", "error");
-        //     });
-        // // console.log(this.state.rumpun);
+        e.preventDefault();
+        this.setState({
+            loading: true
+        });
+        axios
+            .put(`http://127.0.0.1:8877/v1/referensi/rumpun_jabatan/${this.state.url}`, {
+                rumpun: this.state.rumpunJabatanEditInput
+            })
+            .then(response => {
+                this.setState({
+                    rumpunJabatan: response.data.data,
+                    rumpunJabatanEditInput: "",
+                    loading: false
+                });
+                $("#editModal").removeClass("in");
+                $(".modal-backdrop").remove();
+                $('body').removeClass('modal-open');
+                $('body').css('padding-right', '');
+                $("#editModal").hide();
+                swal.fire("Sukses!", "Data Berhasil Diubah!", "success");
+                // console.log("from handle sumit", response);
+            })
+            .catch(error => {
+                this.setState({
+                    loading: false
+                });
+                swal.fire("Error!", "Gagal Mengubah Data, Silahkan Hubungi Admin!", "error");
+            });
+        // console.log(this.state.rumpun);
     }
 
     getRefRumpunJabatan() {
@@ -256,8 +263,8 @@ class RumpunJabatan extends Component {
                     <th scope="row">{rumpunJabatan.nomor}</th>
                     <td>{rumpunJabatan.rumpun}</td>
                     <td>
-                        <button data-target="#editModal" data-toggle="modal" className="mb-2 mr-2 border-0 btn-transition btn btn-shadow btn-outline-warning" type="button" onClick={this.handleEditButton.bind(this, rumpunJabatan.url)}>Edit</button>
-                        <button className="mb-2 mr-2 border-0 btn-transition btn btn-shadow btn-outline-danger" type="button" onClick={this.handleDeleteButton.bind(this, rumpunJabatan.url)}>Delete</button>
+                        <button data-target="#editModal" data-toggle="modal" className="mb-2 mr-2 border-0 btn-transition btn btn-shadow btn-outline-warning" type="button" onClick={this.handleEditButton.bind(this, rumpunJabatan.id_rumpun)}>Edit</button>
+                        {/* <button className="mb-2 mr-2 border-0 btn-transition btn btn-shadow btn-outline-danger" type="button" onClick={this.handleDeleteButton.bind(this, rumpunJabatan.url)}>Delete</button> */}
                     </td>
                 </tr>
             ));
@@ -317,14 +324,14 @@ class RumpunJabatan extends Component {
                     <button aria-label="Close" className="close" data-dismiss="modal" type="button"><span className="close-label">Tutup</span><span className="os-icon os-icon-close"></span></button>
                     <div className="onboarding-side-by-side">
                         <div className="onboarding-media">
-                        <img alt="" src="/iconModal/tagEdit.png" width="200px" />
+                        <img alt="" src="/iconModal/gridAdd.png" width="200px" />
                         </div>
                         <div className="onboarding-content with-gradient">
                         <h4 className="onboarding-title">
                             Ubah Rumpun jabatan
                         </h4>
                         <div className="onboarding-text">
-                            Masukkan Rumpun Jabatan baru.
+                            Masukkan Nama Baru Rumpun Jabatan.
                         </div>
                         <form onSubmit={this.handleEditSubmit}>
                             <div className="row">
@@ -334,7 +341,7 @@ class RumpunJabatan extends Component {
                                         onChange={this.handleEditInputChange}
                                         value={this.state.rumpunJabatanEditInput}
                                         title="Rumpun Jabatan"
-                                        placeholder="Masukkan Rumpun Jabatan Baru.."
+                                        placeholder="Masukkan Nama Baru Rumpun Jabatan.."
                                         type="text"
                                         className="form-control"
                                     />
