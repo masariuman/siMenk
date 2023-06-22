@@ -638,9 +638,7 @@ class Menu extends Component {
                     <li className="has-sub-menu">
                         <NavLink
                             exact="true"
-                            className={isActive =>
-                                "masariuman-active" + (!isActive ? " unselected" : "")
-                            }
+                            className={(navData) => navData.isActive ? "masariuman-active" : ""}
                             to={`/`}
                         >
                             <div className="icon-w">
@@ -663,62 +661,58 @@ class Menu extends Component {
                     <li className="has-sub-menu">
                         <NavLink
                             exact="true"
-                            className={isActive =>
-                                "masariuman-active" + (!isActive ? " unselected" : "")
-                            }
-                            to={`/identitasPegawai`}
+                            className={(navData) => navData.isActive ? "masariuman-active" : ""}
+                            to={`/referensi`}
                         >
                             <div className="icon-w">
                                 <div className="os-icon os-icon-cv-2"></div>
                             </div>
-                            <span>Data Pegawai</span>
+                            <span>Data Referensi</span>
                         </NavLink>
                         <div className="sub-menu-w">
-                    <div className="sub-menu-header">
-                        REFERENSI
+                        <div className="sub-menu-header">
+                            REFERENSI
+                        </div>
+                        <div className="sub-menu-icon">
+                            <i className="os-icon os-icon-cv-2"></i>
+                        </div>
+                        <div className="sub-menu-i">
+                            <ul className="sub-menu">
+                                <li>
+                                    <Link to={`/referensi/rumpun_jabatan`}>
+                                        <i className="os-icon os-icon-grid-squares-22"></i> &nbsp;&nbsp;&nbsp;Rumpun Jabatan
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={`/referensi/subrumpun_jabatan`}>
+                                        <i className="os-icon os-icon-grid-squares-2"></i> &nbsp;&nbsp;&nbsp;Sub Rumpun Jabatan
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={`/referensi/jafung`}>
+                                        <i className="fa fa-id-badge"></i> &nbsp;&nbsp;&nbsp;Jabatan Fungsional
+                                    </Link>
+                                </li>
+                            </ul>
+                            <ul className="sub-menu">
+                                <li>
+                                    <Link to={`/pns`}>
+                                        <i className="fa fa-odnoklassniki"></i> &nbsp;&nbsp;&nbsp;Data CPNS / PNS
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={`/jabatan`}>
+                                        <i className="fa fa-line-chart"></i> &nbsp;&nbsp;&nbsp;Jabatan
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className="sub-menu-icon">
-                        <i className="os-icon os-icon-cv-2"></i>
-                    </div>
-                    <div className="sub-menu-i">
-                        <ul className="sub-menu">
-                            <li>
-                                <Link to={`/referensi/rumpun_jabatan`}>
-                                    <i className="os-icon os-icon-grid-squares-22"></i> &nbsp;&nbsp;&nbsp;Rumpun Jabatan
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to={`/referensi/subrumpun_jabatan`}>
-                                    <i className="os-icon os-icon-grid-squares-2"></i> &nbsp;&nbsp;&nbsp;Sub Rumpun Jabatan
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to={`/referensi/jafung`}>
-                                    <i className="fa fa-id-badge"></i> &nbsp;&nbsp;&nbsp;Jabatan Fungsional
-                                </Link>
-                            </li>
-                        </ul>
-                        <ul className="sub-menu">
-                            <li>
-                                <Link to={`/pns`}>
-                                    <i className="fa fa-odnoklassniki"></i> &nbsp;&nbsp;&nbsp;Data CPNS / PNS
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to={`/jabatan`}>
-                                    <i className="fa fa-line-chart"></i> &nbsp;&nbsp;&nbsp;Jabatan
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                     </li>
                     <li className="has-sub-menu">
                         <NavLink
                             exact="true"
-                            className={isActive =>
-                                "masariuman-active" + (!isActive ? " unselected" : "")
-                            }
+                            className={(navData) => navData.isActive ? "masariuman-active" : ""}
                             to={`/arsip`}
                         >
                             <div className="icon-w">
@@ -741,9 +735,7 @@ class Menu extends Component {
                     <li className="has-sub-menu">
                         <NavLink
                             exact="true"
-                            className={isActive =>
-                                "masariuman-active" + (!isActive ? " unselected" : "")
-                            }
+                            className={(navData) => navData.isActive ? "masariuman-active" : ""}
                             to={`/pengajuan`}
                         >
                             <div className="icon-w">

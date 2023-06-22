@@ -37,8 +37,8 @@ func (h *refRumpunJabatanHandler) UpdateHandler(c *gin.Context) {
 	var rumpunJabatan requests.RefRumpunJabatanRequest
 	id := c.Param("id")
 	ID, _ := strconv.Atoi(id)
-	err := c.ShouldBindJSON(&rumpunJabatan)
-	err = h.refRumpunJabatanService.Update(ID, rumpunJabatan)
+	c.ShouldBindJSON(&rumpunJabatan)
+	err := h.refRumpunJabatanService.Update(ID, rumpunJabatan)
 	universals.PanicErr(err)
 	h.RootHandler(c)
 }
