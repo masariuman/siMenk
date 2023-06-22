@@ -111,3 +111,23 @@ func (s *refRumpunJabatanservice) Update(ID int, refRumpunJabatanRequest request
 	_, err := s.refRumpunJabatanRepository.Update(ID, refRumpunJabatan)
 	return err
 }
+
+func (s *refRumpunJabatanservice) GetSearch(rumpun string) (universals.Pagination, error) {
+	var refRumpunJabatans []returns.RefRumpunJabatan
+	dbRefRumpunJabatans, err := s.refRumpunJabatanRepository.FindLikeRumpun(rumpun)
+	nomor := 1
+	for _, Q := range dbRefRumpunJabatans {
+		nomorString := strconv.Itoa(nomor)
+		refRumpunJabatan := returns.RefRumpunJabatan{
+			Id_rumpun: Q.Id_rumpun,
+			Nomor:     nomorString,
+			Rumpun:    Q.Rumpun,
+		}
+		refRumpunJabatans = append(refRumpunJabatans, refRumpunJabatan)
+		nomor++
+	}
+	refRumpunJabatanPagination := universals.Pagination{
+		Data: refRumpunJabatans,
+	}
+	return refRumpunJabatanPagination, err
+}

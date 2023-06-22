@@ -33,25 +33,25 @@ class RumpunJabatan extends Component {
     }
 
     handleChangeCari(e) {
-        // this.setState({
-        //     cari: e.target.value
-        // });
-        // axios
-        //     .post(`/masariuman_tag/search`, {
-        //         cari: e.target.value
-        //     })
-        //     .then(response => {
-        //         // console.log(response.data);
-        //         this.setState({
-        //             rumpunJabatan: response.data.deeta_tag.data,
-        //             loading: false,
-        //             activePage: response.data.deeta_tag.current_page,
-        //             itemsCountPerPage: response.data.deeta_tag.per_page,
-        //             totalItemsCount: response.data.deeta_tag.total,
-        //             pageRangeDisplayed: 10
-        //         });
-        //         // console.log(this.state.rumpunJabatan);
-        //     });
+        this.setState({
+            cari: e.target.value
+        });
+        axios
+            .post(`http://127.0.0.1:8877/v1/referensi/rumpun_jabatan/search`, {
+                rumpun: e.target.value
+            })
+            .then(response => {
+                // console.log(response.data);
+                this.setState({
+                    rumpunJabatan: response.data.data,
+                    loading: false,
+                    activePage: response.data.current_page,
+                    itemsCountPerPage: response.data.per_page,
+                    totalItemsCount: response.data.total,
+                    pageRangeDisplayed: 10
+                });
+                // console.log(this.state.rumpunJabatan);
+            });
     }
 
     handleDeleteButton(e) {
@@ -257,7 +257,7 @@ class RumpunJabatan extends Component {
     }
 
     renderRumpunJabatan() {
-        return !this.state.rumpunJabatan.length ? <tr><td colSpan="3" className="text-center">Data Tidak Ditemukan</td></tr> :
+        return !this.state.rumpunJabatan ? <tr><td colSpan="3" className="text-center">Data Tidak Ditemukan</td></tr> :
             this.state.rumpunJabatan.map(rumpunJabatan => (
                 <tr key={rumpunJabatan.id_rumpun}>
                     <th scope="row">{rumpunJabatan.nomor}</th>

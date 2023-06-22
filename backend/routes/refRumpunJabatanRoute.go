@@ -19,5 +19,6 @@ func refRumpunJabatan(superRoute *gin.RouterGroup) {
 		refRumpunJabatan.POST("", refRumpunJabatanHandler.StoreHandler)
 		refRumpunJabatan.GET("/:id", refRumpunJabatanHandler.EditHandler)
 		refRumpunJabatan.PUT("/:id", refRumpunJabatanHandler.UpdateHandler)
+		refRumpunJabatan.POST("/search", refRumpunJabatanHandler.SearchHandler)
 	}
 }

@@ -42,3 +42,17 @@ func (h *refRumpunJabatanHandler) UpdateHandler(c *gin.Context) {
 	universals.PanicErr(err)
 	h.RootHandler(c)
 }
+
+func (h *refRumpunJabatanHandler) SearchHandler(c *gin.Context) {
+	var rumpunJabatan requests.RefRumpunJabatanRequest
+	c.ShouldBindJSON(&rumpunJabatan)
+	var rumpunInput string
+	rumpunInput = rumpunJabatan.Rumpun
+	if rumpunInput != "" {
+		refRumpunJabatans, err := h.refRumpunJabatanService.GetSearch(rumpunInput)
+		universals.PanicErr(err)
+		c.JSON(http.StatusOK, refRumpunJabatans)
+	} else {
+		h.RootHandler(c)
+	}
+}

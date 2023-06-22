@@ -319,9 +319,7 @@ class Menu extends Component {
             <li className=" has-sub-menu masariuman_backgroundColorGreen">
                 <NavLink
                     onClick={this.noNav}
-                    className={isActive =>
-                        "masariuman-adminActive" + (!isActive ? " unselected" : "")
-                    }
+                    className={(navData) => navData.isActive ? "masariuman-active" : ""}
                     to={`/admin/referensi`}
                 >
                     <div className="icon-w">
@@ -489,9 +487,7 @@ class Menu extends Component {
         return this.state.level === "0" ?
         <li className="has-sub-menu masariuman_backgroundColorGreen">
         <NavLink
-            className={isActive =>
-                "masariuman-adminActive" + (!isActive ? " unselected" : "")
-            }
+            className={(navData) => navData.isActive ? "masariuman-active" : ""}
             to={`/peremajaanData`}
         >
             <div className="icon-w">
@@ -518,9 +514,7 @@ class Menu extends Component {
         return this.state.level === "0" ?
         <li className="has-sub-menu masariuman_backgroundColorGreen">
         <NavLink
-            className={isActive =>
-                "masariuman-adminActive" + (!isActive ? " unselected" : "")
-            }
+            className={(navData) => navData.isActive ? "masariuman-active" : ""}
             to={`/aadmin`}
         >
             {this.state.jumlahBelumVerif === 0 ? (

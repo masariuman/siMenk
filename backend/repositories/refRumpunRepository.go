@@ -28,17 +28,6 @@ func (r *repository) FindAllPaginatedRefRumpunJabatan(offset int, limit int) ([]
 	return rumpunJabatans, err
 }
 
-func (r *repository) CountActiveRefRumpunJabatan() int64 {
-	var count int64
-	_ = r.database.Model(&migrations.RefRumpunJabatan{}).Count(&count).Error
-	return count
-}
-
-func (r *repository) Store(rumpunJabatan migrations.RefRumpunJabatan) (migrations.RefRumpunJabatan, error) {
-	err := r.database.Create(&rumpunJabatan).Error
-	return rumpunJabatan, err
-}
-
 func (r *repository) FindLast() (migrations.RefRumpunJabatan, error) {
 	var rumpunJabatan migrations.RefRumpunJabatan
 	err := r.database.Debug().Last(&rumpunJabatan).Error
@@ -51,7 +40,24 @@ func (r *repository) FindById(ID int) (migrations.RefRumpunJabatan, error) {
 	return rumpunJabatan, err
 }
 
+func (r *repository) FindLikeRumpun(rumpun string) ([]migrations.RefRumpunJabatan, error) {
+	var rumpunJabatans []migrations.RefRumpunJabatan
+	err := r.database.Debug().Where("rumpun LIKE ?", "%"+rumpun+"%").Find(&rumpunJabatans).Error
+	return rumpunJabatans, err
+}
+
+func (r *repository) Store(rumpunJabatan migrations.RefRumpunJabatan) (migrations.RefRumpunJabatan, error) {
+	err := r.database.Create(&rumpunJabatan).Error
+	return rumpunJabatan, err
+}
+
 func (r *repository) Update(ID int, rumpunJabatan migrations.RefRumpunJabatan) (migrations.RefRumpunJabatan, error) {
 	err := r.database.Model(&rumpunJabatan).Where("id_rumpun = ?", ID).Updates(&rumpunJabatan).Error
 	return rumpunJabatan, err
+}
+
+func (r *repository) CountActiveRefRumpunJabatan() int64 {
+	var count int64
+	_ = r.database.Model(&migrations.RefRumpunJabatan{}).Count(&count).Error
+	return count
 }
