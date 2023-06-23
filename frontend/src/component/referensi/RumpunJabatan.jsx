@@ -241,12 +241,6 @@ class RumpunJabatan extends Component {
             });
     }
 
-    // testTag() {
-    //     axios
-    //         .get("/masariuman_tag")
-    //         .then(response => console.log(response.data.deeta_tag));
-    // }
-
     componentDidMount() {
         this.getRefRumpunJabatan();
         // console.log(this.state.rumpunJabatan);
